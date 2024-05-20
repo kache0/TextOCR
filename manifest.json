@@ -1,0 +1,44 @@
+{
+    "manifest_version": 3,
+    "name": "文字OCR",
+    "version": "1.0.0",
+    "description": "文字OCR",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+          "16": "/images/logo3.png",
+          "48": "/images/logo2.png",
+          "128": "/images/logo1.png"
+        }
+      },
+    "icons": {
+        "16": "/images/logo3.png",
+        "48": "/images/logo2.png",
+        "128": "/images/logo1.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": [
+                "content_script.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "host_permissions": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "permissions": [
+        "contextMenus",
+        "scripting", 
+        "activeTab",
+        "tabs",
+        "storage",
+        "pageCapture"
+    ]
+}
