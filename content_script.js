@@ -1,5 +1,5 @@
 let overlay; // 將overlay聲明為全局變數 避免cancel功能找不到overlay
-let api_key;
+let api_key; // 聲明api_key為全局變數
 
 chrome.storage.local.get(['api_key'], function (result) {
     api_key = result.api_key;
@@ -12,13 +12,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.type) {
 
         case 'get_screenshot_data': {
-            console.log("接收到了",api_key);
             sendResponse("接收成功");
             const base64 = request.payload;
             if (!base64) return sendResponse("未收到");
             console.log("接收到了");
         
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; //隱藏滾輪條
             
             const image = new Image();
             image.src = base64;
@@ -113,11 +112,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     console.log(base64_google_api);
 
                     // 傳送到google api
-                    
                     const url = `https://vision.googleapis.com/v1/images:annotate?key=${api_key}`;
                     
                     
-                    // Request
+                    // Request format
                     const requestBody = {
                         "requests": [
                             {
@@ -148,6 +146,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                             if (data.responses && data.responses[0] && data.responses[0].textAnnotations) {
                                 const extractedText = data.responses[0].textAnnotations[0].description;
                                 console.log(extractedText);
+                                //自動複製功能
                                 navigator.clipboard.writeText(extractedText);
                                 alert("文字已自動複製到剪貼板！");
                             }
