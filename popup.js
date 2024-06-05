@@ -21,8 +21,5 @@ document.addEventListener('DOMContentLoaded', function () {
         chrome.storage.local.set({ api_key: text }, function () {
             alert('API key 保存成功:', text);
         });        
-
-        // 關閉彈出窗口
-        window.close();
     });
 });
